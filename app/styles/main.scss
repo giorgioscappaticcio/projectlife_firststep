@@ -1,5 +1,23 @@
 /* custom styles for individual items, load this after vis.css */
 
+    .vis.timeline .publicholiday {
+      fill: orange;
+      stroke-width: 3px;
+      stroke: yellow;
+    }
+
+    .vis.timeline .vacation {
+      fill: red;
+      stroke-width: 3px;
+      stroke: red;
+    }
+
+    .vis.timeline .training {
+    fill: blue;
+    stroke-width: 2px;
+    stroke: blue;
+    }
+
     .vis.timeline .item img {
       max-height: 40px;
       border-radius: 50%;

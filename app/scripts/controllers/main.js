@@ -10,20 +10,23 @@
 angular.module('mudanoApp')
 	.controller('MainCtrl', function ($scope, mani) {
 
-		$scope.publicholiday = [
-{id:555550,start:moment('25/12/2014','DD-MM-YYYY'),end:moment('27/12/2014','DD-MM-YYYY'),className:'P',unit:'',group:'PH'},
-{id:555551,start:moment('01/01/2015','DD-MM-YYYY'),end:moment('02/01/2015','DD-MM-YYYY'),className:'P',unit:'',group:'PH'},
-{id:555552,start:moment('03/04/2015','DD-MM-YYYY'),end:moment('03/04/2015','DD-MM-YYYY').add(12,'hours'),className:'P',unit:'AM',group:'PH'},
-{id:55555,start:moment('06/04/2015','DD-MM-YYYY'),end:moment('07/04/2015','DD-MM-YYYY'),className:'P',unit:'',group:'PH'},
-{id:555553,start:moment('04/05/2015','DD-MM-YYYY'),end:moment('05/05/2015','DD-MM-YYYY'),className:'P',unit:'',group:'PH'},
-{id:555554,start:moment('25/05/2015','DD-MM-YYYY'),end:moment('26/05/2015','DD-MM-YYYY'),className:'P',unit:'',group:'PH'},
-{id:555555,start:moment('31/08/2015','DD-MM-YYYY'),end:moment('01/09/2015','DD-MM-YYYY'),className:'P',unit:'',group:'PH'},
-{id:555556,start:moment('25/12/2015','DD-MM-YYYY'),end:moment('26/12/2015','DD-MM-YYYY'),className:'P',unit:'',group:'PH'},
-{id:555557,start:moment('28/12/2015','DD-MM-YYYY'),end:moment('29/12/2015','DD-MM-YYYY'),className:'P',unit:'',group:'PH'}
-		];
+
+		$scope.$watch('clickedEvent',function(clickedEvent){ 
+	    	if(clickedEvent){
+	          
+	          console.log($scope.events[clickedEvent])
+	          $scope.holidayplan = generateHolidayPlan($scope.singleDateResponse,$scope.events[clickedEvent].userid);
+	       		$scope.holidayplan.forEach(orderDates)	
+	       		//console.log($scope.holidayplan);
+	       }        
+		});
 
 		
 
+	
+
+		$scope.test = 19;
+		
 		
 		$scope.skills = {
 				1 : 'FE',
@@ -76,157 +79,188 @@ angular.module('mudanoApp')
 			22:'https://s3.amazonaws.com/uifaces/faces/twitter/nettatheninja/128.jpg',
 			23:'https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg',
 		}
-		// $scope.group = new vis.DataSet([
-		// 	{id: 'AM', content:'AM'},
-  //       	{id: 'PM', content:'PM'}
-  //       ]);
-        $scope.group = new vis.DataSet([
-			{id: 'FE', content:'Frontend'},
-        	{id: 'BE', content:'Backend'},
-        	{id: 'M', content:'Manager'},
-        	{id: 'BA', content:'Bussinest Analyst'}
-        ]);
+
+        
+
+        mani.getHolidays().then(function(response){
+        	$scope.originalResp = response;
+        	$scope.refresh('P');
+        	$scope.showPublicHol = false;
+        	// $scope.people = generatePeople(response,$scope.skills, $scope.peopleAvatar);
+        	// $scope.events = genVisJsItems(response,$scope.skills, $scope.peopleAvatar,'');
+        	// $scope.FE_events = filterGroupEvents($scope.events,'BE');
+        	// $scope.FE_events.forEach(checkOverlapEvents);
+		});
+
+		// mani.getData().then(function(response){
+  //       	$scope.singleDateResponse = response;
+  //       });
 
         $scope.refresh = function(filter){
-        	mani.getHolidays().then(function(response){
-	        	//console.log(response);
-	        	var datasetta = [];
-				
-				for (var i in response) {
-				  if (response.hasOwnProperty(i)) {
-				    //console.log(i + " -> " + response[i].date);
-				 	if (response[i].value != filter){
-				 		var absence = {};
-					 	absence.content = '<img src="'+$scope.peopleAvatar[response[i].userid]+'">';
-					 	//absence.content = response[i].name + '<br>'+response[i].unit+ '<br>'+response[i].date;
-					 	absence.id = i;
-					 	// absence.group = response[i].unit;
-					 	absence.group = $scope.skills[response[i].userid];
-					 	absence.subgroupOrder = parseInt(response[i].userid);
-					 	absence.className = response[i].value;
-					 	//absence.subgroup = response[i].id;
-					 	absence.start = moment(response[i].startdate, "DD-MM-YYYY");
-					 	absence.end = moment(response[i].enddate, "DD-MM-YYYY");
-					 	console.log(response[i].unit);
-					 	switch(response[i].unit){
-					 		case 'AM':
-					 			absence.start;
-					 			absence.end.add(12, 'hours');
-					 			console.log(absence.start)
-					 		break;
-					 		case 'PM':
-					 			absence.start.add(12, 'hours');
-					 			absence.end.add(24, 'hours');
-					 			console.log(absence.end)
-					 			console.log(absence.start)
-					 		break;
-					 		default:
-					 			absence.start;
-					 			absence.end.add(24, 'hours');;
-					 		break;
-					 	}
-					 	
-					 	
-					 	datasetta.push(absence)	
-				 	}
-				 	
-				  }
-				}
-				$scope.items = new vis.DataSet(datasetta)
-	        });
+        	var response = [];
+        	angular.copy($scope.originalResp, response);
+        	response = genVisJsItems(response,$scope.skills, $scope.peopleAvatar,filter);
+			console.log(response);
+			$scope.items = response;
         }
 
-        $scope.refresh('P');
 
         $scope.showholiday = function(){
-        	if ($scope.isPubHolShown || $scope.isPubHolShown==undefined ) {
-        		$scope.refresh('');
-        		
+        	if (!$scope.showPublicHol){
+        		$scope.refresh('');	
         	} else {
         		$scope.refresh('P');
         	}
-        	$scope.isPubHolShown = !$scope.isPubHolShown; 
+        	
+        	$scope.showPublicHol = !$scope.showPublicHol;
         }
+
+        $scope.showEvent = function(userName){
+        	$scope.personName = userName;
+        }
+
+        $scope.demoment = function(date){
+        	return moment(date).format('DD-MM-YYYY');
+        }
+
+        function genVisJsItems (response,skills,avatars,filter){
+        	var a = [];
+        	for (var i in response){
+        		if (response.hasOwnProperty(i)) {
+        			var obj = response[i];
+					obj.id = i;
+					obj.start = moment(obj.startdate,'DD-MM-YYYY');
+					obj.end = moment(obj.enddate,'DD-MM-YYYY');
+					obj.group = skills[obj.userid];
+					obj.content = '<img src="'+avatars[obj.userid]+'" />';
+					obj.className = obj.value;
+					switch(obj.unit){
+				 		case 'AM':
+				 			obj.end.add(12, 'hours');
+				 		break;
+				 		case 'PM':
+				 			obj.start.add(12, 'hours');
+				 			obj.end.add(24, 'hours');
+				 		break;
+				 	}
+					delete obj.startdate;
+					delete obj.enddate;
+
+					if (obj.value != filter){
+        				a.push(obj);
+        			}
+					
+        		}
+        	}
+        	return a;
+        }
+
+        function generatePeople(response,skills,avatars){
+        	var a = [];
+        	
+        	for (var i in response){
+        		if (response.hasOwnProperty(i)) {
+        			var person = {};		
+        			person.name = response[i].name;
+        			person.userid = response[i].userid;
+        			person.group = skills[person.userid];
+					person.image = '<img src="'+avatars[person.userid]+'" />';
+
+        			
+        			if (a.length < 1 ){a.push(person)} else {
+        				//console.log (a[a.length-1]);
+        				if (parseInt(a[a.length-1].userid)!=parseInt(person.userid)){
+        					a.push(person)
+        				}
+        			}
+        		}
+        	}
+        	return a;
+        }
+
+        function compareDate(eventA, eventB){
+            if (eventA.start <= eventB.end && eventA.end >= eventB.start){
+        		return true;
+        	}
+        }
+
+        function filterGroupEvents(events,groupfilter){
+        	var a = [];
+        	for (var i in events) {
+        		if(events.hasOwnProperty(i)){
+        			if (events[i].group == groupfilter) {
+        				a.push(events[i]);
+        			}
+        		}
+        	}
+        	return	a; 
+		}
+
+		function checkOverlapEvents (element, index, array){
+			// console.log(element.eventid)
+			var a = [];
+			
+			for (var i=index+1; i<array.length; i++) {
+				var samePerson = array[i].name == element.name;
+				
+
+				 var overlap = compareDate(element,array[i]);
+				 if (overlap){
+				 	if (element.value != 'P' && array[i] != 'P'){ 
+				 		
+				 		// console.log('firstevent '+element.name+' ('+element.value+') '+moment(element.start).format('DD-MM-YYYY')+'==='+moment(element.end).format('DD-MM-YYYY'));
+						// console.log('secondevent '+array[i].name+' ('+array[i].value+')'+moment(array[i].start).format('DD-MM-YYYY')+'==='+moment(array[i].end).format('DD-MM-YYYY'));
+					}
+				}
+			}
+		}
+
+		function orderDates(element,index,array){
+			var a = [];
+			
+			for (var i=index+1; i<array.length; i++) {
+				//obj = {}
+				if (element.date != array[i].date ){
+					a.push(element)
+				} else {
+					console.log(element.unit)
+				}
+			}
+			return a;
+		}
+
+		function generateHolidayPlan(response, id){
+			var a = []
+			for (var i in response){
+				if (response.hasOwnProperty(i)){
+					if (response[i].userid == id){
+						var obj = {};
+						obj.x = moment(response[i].date,'DD-MM-YYYY');
+						obj.unit = response[i].unit;
+						switch(response[i].value){
+							case 'V':
+							obj.y = 12;
+							obj.group = 'V';
+							break;
+							case 'P' : 
+							obj.y = 8;
+							obj.group = 'P';
+							break;
+							case 'T':
+							obj.y = 4;
+							obj.group = 'T';
+							break;
+						}
+						a.push(obj)
+					}
+				}
+			}
+			return a;
+		}
         
 
 
-		// mani.getData().then(function(response){
-			
-		// 	$scope.peopleIDs = genIDsArr(response);
-
-			
-
-		// 	$scope.peopleHoliday = {}
-
-		// 	for (var i=0; i<$scope.peopleIDs.length; i++){
-				
-		// 		// order dates inside 
-		// 		//$scope.peopleHoliday{vacations:[],publicholidays:[],traing:[]}
-
-		// 		$.grep( response, function( n, j ) {
-	 //  				 if (n.userid == $scope.peopleIDs[i]){
-	  				 	
-	 //  				 	if ($scope.peopleHoliday[n.userid] == undefined){
-	 //  				 		$scope.peopleHoliday[n.userid] = {}	
-	 //  				 	}
-	 //  				 	var date = moment(n.date,'DD-MM-YYYY');
-	 //  				 	switch (n.value){
-	 //  				 		case 'V':
-	 //  				 			if ($scope.peopleHoliday[n.userid].vacation == undefined) {
-		// 	  				 		$scope.peopleHoliday[n.userid].vacation = [];	
-		// 	  				 	} 
-	 //  				 			$scope.peopleHoliday[n.userid].vacation.push(date);
-	 //  				 		break;
-	 //  				 		case 'P':
-	 //  				 			if ($scope.peopleHoliday[n.userid].publicholiday == undefined) {
-		// 	  				 		$scope.peopleHoliday[n.userid].publicholiday = [];	
-		// 	  				 	} 
-	 //  				 			$scope.peopleHoliday[n.userid].publicholiday.push(date);
-	 //  				 		break;
-	 //  				 		case 'T':
-	 //  				 			if ($scope.peopleHoliday[n.userid].training == undefined) {
-		// 	  				 		$scope.peopleHoliday[n.userid].training = [];	
-		// 	  				 	} 
-	 //  				 			$scope.peopleHoliday[n.userid].training.push(date);
-	 //  				 		break;
-	 //  				 	}	
-	 //  				 }
-	 //  			});
-				
-		// 	}
-
-
-
-
-		// 	//console.log(filterStore( response, filter));
-		// 	//$scope.items = new vis.DataSet (response);
-		// 	// $.grep( response, function( n, i ) {
-  // 			// 			 n.date
-		// 	// });
-		// 	// var result = $.grep(response, function(e){ return e.id === id; });
-		// 	var datasetta = [];
-		// 	for (var i in response) {
-		// 	  if (response.hasOwnProperty(i)) {
-		// 	    //console.log(i + " -> " + response[i].date);
-		// 	 	// if (response[i].userid == 1){
-		// 	 		var absence = {};
-		// 		 	absence.content = response[i].name;
-		// 		 	//absence.content = response[i].name + '<br>'+response[i].unit+ '<br>'+response[i].date;
-		// 		 	absence.id = i;
-		// 		 	// absence.group = response[i].unit;
-		// 		 	absence.group = $scope.skills[response[i].userid];
-		// 		 	absence.className = response[i].value;
-		// 		 	//absence.subgroup = response[i].id;
-		// 		 	absence.start = moment(response[i].date, "DD-MM-YYYY");
-		// 		 	datasetta.push(absence)	
-		// 	 	// }
-			 	
-		// 	  }
-		// 	}
-		// 	//console.log(datasetta)
-		// 	$scope.items = new vis.DataSet(datasetta)
-			
-		// });
+		
 
 
 		function genIDsArr(response){
