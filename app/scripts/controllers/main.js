@@ -16,7 +16,10 @@ angular.module('mudanoApp')
 	          
 	          console.log($scope.events[clickedEvent])
 	          $scope.holidayplan = generateHolidayPlan($scope.singleDateResponse,$scope.events[clickedEvent].userid);
-	       		$scope.holidayplan.forEach(orderDates)	
+	       		$scope.holidayplan.forEach(orderDates);
+	       		$scope.focus = {};	
+	       		$scope.focus.start = $scope.events[clickedEvent].start;
+	       		$scope.focus.end = $scope.events[clickedEvent].end;
 	       		//console.log($scope.holidayplan);
 	       }        
 		});
@@ -86,24 +89,34 @@ angular.module('mudanoApp')
         	$scope.originalResp = response;
         	$scope.refresh('P');
         	$scope.showPublicHol = false;
-        	// $scope.people = generatePeople(response,$scope.skills, $scope.peopleAvatar);
-        	// $scope.events = genVisJsItems(response,$scope.skills, $scope.peopleAvatar,'');
-        	// $scope.FE_events = filterGroupEvents($scope.events,'BE');
-        	// $scope.FE_events.forEach(checkOverlapEvents);
+        	$scope.people = generatePeople(response,$scope.skills, $scope.peopleAvatar);
+        	var res = [];
+        	angular.copy(response, res);
+        	$scope.events = genVisJsItems(res,$scope.skills, $scope.peopleAvatar,'');
+        	$scope.FE_events = filterGroupEvents($scope.events,'BE');
+        	$scope.FE_events.forEach(checkOverlapEvents);
 		});
 
-		// mani.getData().then(function(response){
-  //       	$scope.singleDateResponse = response;
-  //       });
+		mani.getData().then(function(response){
+        	$scope.singleDateResponse = response;
+        });
 
         $scope.refresh = function(filter){
         	var response = [];
         	angular.copy($scope.originalResp, response);
         	response = genVisJsItems(response,$scope.skills, $scope.peopleAvatar,filter);
-			console.log(response);
+			//console.log(response);
 			$scope.items = response;
         }
 
+
+        $scope.$watch('refineGroup',function(refineGroup){
+        	if (refineGroup){
+        		filterGroup(refineGroup);
+        	}
+        })
+        
+        
 
         $scope.showholiday = function(){
         	if (!$scope.showPublicHol){
@@ -140,6 +153,9 @@ angular.module('mudanoApp')
 				 		break;
 				 		case 'PM':
 				 			obj.start.add(12, 'hours');
+				 			obj.end.add(24, 'hours');
+				 		break;
+				 		default:
 				 			obj.end.add(24, 'hours');
 				 		break;
 				 	}
@@ -208,8 +224,8 @@ angular.module('mudanoApp')
 				 if (overlap){
 				 	if (element.value != 'P' && array[i] != 'P'){ 
 				 		
-				 		// console.log('firstevent '+element.name+' ('+element.value+') '+moment(element.start).format('DD-MM-YYYY')+'==='+moment(element.end).format('DD-MM-YYYY'));
-						// console.log('secondevent '+array[i].name+' ('+array[i].value+')'+moment(array[i].start).format('DD-MM-YYYY')+'==='+moment(array[i].end).format('DD-MM-YYYY'));
+				 		//console.log('firstevent '+element.name+' ('+element.value+') '+moment(element.start).format('DD-MM-YYYY')+'==='+moment(element.end).format('DD-MM-YYYY'));
+						//console.log('secondevent '+array[i].name+' ('+array[i].value+')'+moment(array[i].start).format('DD-MM-YYYY')+'==='+moment(array[i].end).format('DD-MM-YYYY'));
 					}
 				}
 			}
@@ -239,11 +255,11 @@ angular.module('mudanoApp')
 						obj.unit = response[i].unit;
 						switch(response[i].value){
 							case 'V':
-							obj.y = 12;
+							obj.y = 8;
 							obj.group = 'V';
 							break;
 							case 'P' : 
-							obj.y = 8;
+							obj.y = 6;
 							obj.group = 'P';
 							break;
 							case 'T':
@@ -258,7 +274,39 @@ angular.module('mudanoApp')
 			return a;
 		}
         
-
+		function filterGroup (filter){
+        	switch(filter){
+        		case 'FE':
+        			$scope.group = new vis.DataSet([
+						{id: 'FE', content:'Frontend Developers'}
+		        	]);
+		        break;
+		        case 'BE':
+        			$scope.group = new vis.DataSet([
+						{id: 'BE', content:'Backend Developers'}
+		        	]);
+		        break;
+		        case 'M':
+        			$scope.group = new vis.DataSet([
+						{id: 'M', content:'Project Managers'}
+		        	]);
+		        break;
+		        case 'BA':
+        			$scope.group = new vis.DataSet([
+						{id: 'BA', content:'Bussiness Analyst'}
+		        	]);
+		        break; 
+		        default :
+		        $scope.group = new vis.DataSet([
+					{id: 'FE', content:'Frontend Developers'},
+		        	{id: 'BE', content:'Backend Developers'},
+		        	{id: 'M', content:'Project Managers'},
+		        	{id: 'BA', content:'Bussinest Analyst'}
+		        ]);
+		        break;
+        	}
+        	
+        }
 
 		
 

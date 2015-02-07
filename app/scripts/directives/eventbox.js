@@ -12,21 +12,31 @@ angular.module('mudanoApp')
       template: '<div></div>',
       scope: {
         dataset: '=dataset',
+        focus : '=focus'
       },
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         
 
         scope.$watch('dataset', function(dataset) {
-          var data = new vis.DataSet(dataset);
-          scope.graph2d.setItems(data);
-          console.log(dataset)
+          if (dataset){
+            var data = new vis.DataSet(dataset);
+            scope.graph2d.destroy();
+            scope.graph2d = new vis.Graph2d(element[0], data, groups, options);
+            //scope.graph2d.setItems(dataset);
+            scope.graph2d.setWindow(scope.focus.start,scope.focus.end);
+            // console.log(dataset)
+          }
+          
         });
+
+        
 
         var options = {
           height: '300px',
+          orientation: 'top',
           zoomMin: 1000 * 60 * 60 * 24 * 7,             // one day in milliseconds
-          zoomMax: 1000 * 60 * 60 * 24 * 31 * 6 ,
+          zoomMax: 1000 * 60 * 60 * 24 * 31 * 12 ,
           min: new Date(2014, 8, 1),                // lower limit of visible range
           max: new Date(2016, 0, 1), 
           start: '2014-06-10',
@@ -40,7 +50,7 @@ angular.module('mudanoApp')
           dataAxis: {
             customRange: {
                 left: {
-                    min: 0, max: 15
+                    min: 2, max: 10
                 }
             }
           },

@@ -10,8 +10,8 @@ angular.module('mudanoApp')
   .directive('timeline', function ($rootScope) {
     return {
       template: '<div></div>'+
-      			'<button ng-click="zoom(0.2)">Zoom Out</button>'+
-      			'<button ng-click="zoom(-0.2)">Zoom In</button><br><br>',
+      			'<button ng-click="zoom(1)">Zoom Out</button>'+
+      			'<button ng-click="zoom(-1)">Zoom In</button><br><br>',
       scope: {
 	      dataset: '=dataset',
 	      groups: '=groups',
@@ -26,7 +26,7 @@ angular.module('mudanoApp')
 		    min: new Date(2014, 8, 1),                // lower limit of visible range
 		    max: new Date(2016, 0, 1),                // upper limit of visible range
 		    zoomMin: 1000 * 60 * 60 * 24 * 7,             // one day in milliseconds
-		    zoomMax: 1000 * 60 * 60 * 24 * 31 * 6     // about three months in milliseconds
+		    zoomMax: 1000 * 60 * 60 * 24 * 31 * 12     // about three months in milliseconds
 		  };
 
 	
@@ -36,26 +36,33 @@ angular.module('mudanoApp')
 	       	scope.timeline.setItems(data);
 	      });
 
-       //  scope.$watch('groups', function(groups) {
-	      //  	//console.log(groups)
-	      // });
+        scope.$watch('groups', function(groups) {
+	       	//console.log(groups)
+	       	if (groups){
+	       		// scope.timeline.destroy();
+	       		// var data = new vis.DataSet(scope.dataSet);
+	       		// scope.timeline = new vis.Timeline(element[0], data, groups, options);
+	       		scope.timeline.setGroups(groups);	
+	       	}
+	       	
+	      });
 
         // Configuration for the Timeline
-  		var groups = new vis.DataSet([
-			{id: 'FE', content:'Frontend'},
-        	{id: 'BE', content:'Backend'},
-        	{id: 'M', content:'Manager'},
+  		var group = new vis.DataSet([
+			{id: 'FE', content:'Frontend Developers'},
+        	{id: 'BE', content:'Backend Developers'},
+        	{id: 'M', content:'Project Managers'},
         	{id: 'BA', content:'Bussinest Analyst'}
         ]);
         // scope.dataset = [];
   		// Create a Timeline
-  		scope.timeline = new vis.Timeline(element[0], scope.dataSet, groups, options);
+  		scope.timeline = new vis.Timeline(element[0], scope.dataSet, group, options);
 
-  // 		scope.timeline.on('select', function (properties) {
-		//   console.log(properties)
-		//   $rootScope.clickedEvent = properties.items[0];
-		//   scope.$apply();
-		// });
+  		scope.timeline.on('select', function (properties) {
+		  console.log(properties)
+		  $rootScope.clickedEvent = properties.items[0];
+		  scope.$apply();
+		});
 
   		scope.zoom = function(percentage) {
 	        var range = scope.timeline.getWindow();

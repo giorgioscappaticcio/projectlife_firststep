@@ -1,7 +1,11 @@
 /* custom styles for individual items, load this after vis.css */
 
+    .graph2d .vispanel.left {
+      visibility: hidden;
+      width: 0px !important;
+    }
     .vis.timeline .publicholiday {
-      fill: orange;
+      fill: yellow;
       stroke-width: 3px;
       stroke: yellow;
     }

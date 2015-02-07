@@ -1,21 +1,30 @@
 <button ng-click="showholiday()">Public holiday</button>
+<select ng-model="refineGroup">
+  <option value="">Select a group of people</option>
+  <option value="All">All</option>
+  <option value="BA">Bussinest Analyst</option>
+  <option value="M">Project manager</option>
+  <option value="FE">Frontend developer</option>
+  <option value="BE">Backend developer</option>
+</select>
 <timeline dataset="items" groups="group" holidays="publicholiday"></timeline>
-<!-- <select ng-model="test">
+<eventbox class="graph2d" dataset="holidayplan" focus="focus"></eventbox>
+<select ng-model="test">
   <option value="">All</option>
   <option value="BA">Bussinest Analyst</option>
   <option value="M">Project manager</option>
   <option value="FE">Frontend developer</option>
   <option value="BE">Backend developer</option>
-</select> -->
-<!-- <eventbox dataset="holidayplan"></eventbox> -->
-<!-- <ul style="float:left">
+</select>
+
+<ul style="float:left">
   <li ng-repeat="person in people | filter:{group:test}" ng-bind-html="person.image" ng-click="showEvent(person.name)"></li>
 </ul>
 
 <ul style="float:right">
   <li ng-repeat="event in events | filter:{name:personName}" ng-bind="demoment(event.start) + ' ('+event.value+') '+ demoment(event.end)"></li>
 </ul>
- -->
+
 
 
  
