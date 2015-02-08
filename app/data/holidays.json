@@ -666,15 +666,6 @@
     "unit":"''"
   },
   {
-    "eventid":76,
-    "userid":7,
-    "name":"Amelia Gade Corson",
-    "value":"P",
-    "startdate":"06/04/2015",
-    "enddate":"06/04/2015",
-    "unit":"''"
-  },
-  {
     "eventid":77,
     "userid":7,
     "name":"Amelia Gade Corson",
@@ -814,8 +805,8 @@
     "userid":8,
     "name":"Edward H. Temme",
     "value":"P",
-    "startdate":"31/08/2015",
-    "enddate":"31/08/2015",
+    "startdate":"25/12/2015",
+    "enddate":"25/12/2015",
     "unit":"''"
   },
   {
@@ -823,17 +814,8 @@
     "userid":8,
     "name":"Edward H. Temme",
     "value":"P",
-    "startdate":"25/12/2015",
-    "enddate":"25/12/2015",
-    "unit":"''"
-  },
-  {
-    "eventid":95,
-    "userid":8,
-    "name":"Edward H. Temme",
-    "value":"P",
-    "startdate":"28/08/2015",
-    "enddate":"28/08/2015",
+    "startdate":"28/12/2015",
+    "enddate":"28/12/2015",
     "unit":"''"
   },
   {
@@ -874,15 +856,6 @@
   },
   {
     "eventid":100,
-    "userid":9,
-    "name":"Florence Chadwick",
-    "value":"P",
-    "startdate":"04/05/2015",
-    "enddate":"04/05/2015",
-    "unit":"''"
-  },
-  {
-    "eventid":101,
     "userid":9,
     "name":"Florence Chadwick",
     "value":"P",
@@ -969,7 +942,7 @@
     "value":"P",
     "startdate":"03/04/2015",
     "enddate":"03/04/2015",
-    "unit":"'AM"
+    "unit":"AM"
   },
   {
     "eventid":111,
@@ -1104,7 +1077,7 @@
     "value":"P",
     "startdate":"03/04/2015",
     "enddate":"03/04/2015",
-    "unit":"'AM"
+    "unit":"AM"
   },
   {
     "eventid":128,
@@ -1135,15 +1108,6 @@
   },
   {
     "eventid":131,
-    "userid":11,
-    "name":"Marilyn Bell",
-    "value":"P",
-    "startdate":"31/08/2015",
-    "enddate":"31/08/2015",
-    "unit":"''"
-  },
-  {
-    "eventid":132,
     "userid":11,
     "name":"Marilyn Bell",
     "value":"P",
@@ -1243,15 +1207,6 @@
   },
   {
     "eventid":143,
-    "userid":12,
-    "name":"Brojen Das",
-    "value":"P",
-    "startdate":"31/08/2015",
-    "enddate":"31/08/2015",
-    "unit":"''"
-  },
-  {
-    "eventid":144,
     "userid":12,
     "name":"Brojen Das",
     "value":"P",
@@ -1944,30 +1899,12 @@
     "unit":"''"
   },
   {
-    "eventid":2221,
-    "userid":20,
-    "name":"Philip Rush",
-    "value":"P",
-    "startdate":"25/12/2014",
-    "enddate":"26/12/2014",
-    "unit":"''"
-  },
-  {
     "eventid":221,
     "userid":20,
     "name":"Philip Rush",
     "value":"P",
     "startdate":"25/12/2014",
     "enddate":"26/12/2014",
-    "unit":"''"
-  },
-  {
-    "eventid":222,
-    "userid":20,
-    "name":"Philip Rush",
-    "value":"P",
-    "startdate":"01/01/2015",
-    "enddate":"01/01/2015",
     "unit":"''"
   },
   {

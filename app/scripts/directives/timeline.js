@@ -9,9 +9,11 @@
 angular.module('mudanoApp')
   .directive('timeline', function ($rootScope) {
     return {
-      template: '<div></div>'/*+
-      			'<button ng-click="zoom(1)">Zoom Out</button>'+
-      			'<button ng-click="zoom(-1)">Zoom In</button><br><br>'*/,
+      template: '<div class="zoom_cont"><div class="zoom _in" ng-click="zoom(-0.3)"></div>'+
+      			'<div class="zoom _out"  ng-click="zoom(1)"></div></div>'+
+      			'<div ng-click="move(0.5)" class="circle left arrow"></div>'+
+    			'<div ng-click="move(-0.5)" class="circle right arrow"></div>',
+      			
       scope: {
 	      dataset: '=dataset',
 	      groups: '=groups',
@@ -72,6 +74,16 @@ angular.module('mudanoApp')
 	        scope.timeline.setWindow({
 	            start: range.start.valueOf() - interval * percentage,
 	            end:   range.end.valueOf()   + interval * percentage
+	        });
+	    }
+
+	    scope.move = function(percentage) {
+	        var range = scope.timeline.getWindow();
+	        var interval = range.end - range.start;
+
+	        scope.timeline.setWindow({
+	            start: range.start.valueOf() - interval * percentage,
+	            end:   range.end.valueOf()   - interval * percentage
 	        });
 	    }
       }

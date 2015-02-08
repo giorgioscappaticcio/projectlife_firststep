@@ -358,6 +358,31 @@ module.exports = function (grunt) {
       }
     },
 
+    ngtemplates:  {
+      app:        {
+        src:      ['./**/views/**.html', './**/views/**/**.html'],
+        dest:     'app/scripts/app.templates.js',
+        options: {
+          prefix: '',
+          //usemin: 'scripts/scripts.js',
+          module: 'mudanoApp',
+          url: function(url) {
+            return url.replace('./app/', ''); // fix for absolute path urls
+          },
+          htmlmin: {
+            collapseBooleanAttributes:      true,
+            collapseWhitespace:             true,
+            removeAttributeQuotes:          false,
+            removeComments:                 true,
+            removeEmptyAttributes:          false,
+            removeRedundantAttributes:      false,
+            removeScriptTypeAttributes:     true,
+            removeStyleLinkTypeAttributes:  true
+          }
+        }
+      }
+    },
+
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -368,10 +393,12 @@ module.exports = function (grunt) {
       ],
       dist: [
         'compass:dist',
-        'imagemin',
+        //'imagemin',
         'svgmin'
       ]
     },
+
+    
 
     // Test settings
     karma: {
@@ -414,6 +441,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'ngtemplates',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',

@@ -1,23 +1,280 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+
 @import "compass/css3/box-sizing";
 @import "grid.scss";
-
-    $opensans: 'Open Sans Condensed', sans-serif;
-
-    $vacation : #D90F5A;
-    $public: #F8CA00;
-    $training: #3A89C9;
-
-    $darkgray: #333333;
-    $lightgray: #F6F6F6;
-    $bourdeux: #9E0C39;
+@import "brand.scss";
+@import "../../bower_components/normalize.scss/normalize.scss";
+    
 
     body {
-      margin: 20px 0 0 20px;
+      //margin: 0px 0 0 20px;
     }
 
     body {
-      // background-color: $darkgray;
+      background-color: $darkgray;
+    }
+
+    .topnav {
+      width: 100%;
+      height: 50px;
+      background-color: $pink_brand;
+    }
+
+    .logo {
+      float: left;
+      height: 30px;
+      width: 178px;
+      background-image: inline-image($logo_link);
+      background-size: contain;
+      margin: 10px 16px 0;
+
+    }
+
+    .zoom_cont {
+      position: absolute;
+      width: 60px;
+      height: 25px;
+      margin:20px;
+      z-index: 999;
+    }
+    .zoom {
+      float: left;
+      width: 30px;
+      height: 25px;
+      background-image: inline-image($zoom_icon);
+      cursor: pointer;
+
+        &._in {
+        }
+        &._out {
+          background-position: 30px center;
+        }
+    }
+
+    .custom_link {
+      display: inline-block;
+      font-family: $opensans;
+      font-size: 16px;
+      color: $pink_brand;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .close_btn {
+      position: absolute;
+      width: 78px;
+      height: 156px;
+      top: 50%;
+      right: 10px;
+      margin-top: -73px;
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      z-index: 9;  
+    }
+
+    .right__{
+      margin-top: -20px;
+      font-family: $opensans;
+      background-color: $lightgray;
+      
+      .profile_name,
+      .profile_position {
+        width: 100%;
+      }
+      .profile_name {
+        padding-top: 40px;
+        padding-bottom:10px;
+        font-size: 32px;
+      }
+      .profile_position {
+        font-size: 20px;
+      }
+      .profile_pic {
+        padding: 20px;
+        img {
+          width: 100%;
+          // padding: 20px;
+          border-radius: 50%;
+          -webkit-box-shadow: 3px 8px 40px -5px rgba(66,66,66,1);
+          -moz-box-shadow: 3px 8px 40px -5px rgba(66,66,66,1);
+          box-shadow: 3px 8px 40px -5px rgba(66,66,66,1);
+        }
+        @include clearfix;
+      }
+
+      .infoevents {
+        list-style: none;
+        float:left;
+        width: 100%;
+        margin: 10px 10px 10px -20px;
+          li {
+            position: relative;
+            float:left;
+            height:30px;
+            width:30px;
+            margin-left: 10px;
+            margin-top: 12px;
+            border-radius: 50%;
+           -moz-border-radius: 50%;
+           -webkit-border-radius: 50%;
+            &.P {
+              background:$public;
+            }
+            &.T {
+              background:$training;
+            }
+            &.V {
+              background:$vacation;
+            }
+            .AM {
+              position: absolute;
+              width:32px;
+              height:16px;
+              top:50%;
+              left: -1px;
+              background:$lightgray;
+              border-radius: 0px 90px 0 0;
+             -moz-border-radius: 90px 90px 0 0;
+             -webkit-border-radius: 0px 0px 90px 90px;
+            }
+            .PM {
+              position: absolute;
+              width:32px;
+              height:16px;
+              top:-1px;
+              left: -1px;
+              background:$lightgray;
+              border-radius: 90px 90px 0 0;
+             -moz-border-radius: 90px 90px 0 0;
+             -webkit-border-radius: 90px 90px 0 0;
+            }
+          }
+          &:empty {
+            display: none;
+          }
+      }
+      
+        .right__content {
+          display: none;
+        }
+        &.open .right__content{
+          display: block;
+        }
+    }
+
+
+    .circle {
+      position: absolute;
+      height:45px;
+      width:90px;
+      z-index: 1;
+      top: 50%;
+      background-color: rgba(0,0,0,0.5);
+      background-size: 40%;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: blue;
+      border-radius: 90px 90px 0 0;
+     -moz-border-radius: 90px 90px 0 0;
+     -webkit-border-radius: 90px 90px 0 0;
+      -webkit-transition: right .3s ease, left .3s ease;
+      -moz-transition: right .3s ease, left .3s ease;
+      -o-transition: right .3s ease, left .3s ease;
+      -ms-transition: right .3s ease, left .3s ease;
+      transition: right .3s ease, left .3s ease;
+      cursor: pointer;
+        &.close {
+          background-image: inline-image($close_icon);
+          background-position: center 14px;
+        }
+        &.left {
+          -ms-transform: rotate(90deg); /* IE 9 */
+          -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+          transform: rotate(90deg);
+          left: -40px;
+            &:hover{
+              background-color: rgba(0,0,0,0.8);
+              left: -23px;
+            }
+            &.arrow {
+              background-image: inline-image($arrow_left);
+            }
+        }
+        &.right{
+          -ms-transform: rotate(-90deg); /* IE 9 */
+          -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+          transform: rotate(-90deg);
+          right: -23px;
+          &:hover{
+            background-color: rgba(0,0,0,0.8);
+            right: -24px;
+          }
+          &.arrow {
+              background-image: inline-image($arrow_left);
+            }
+        }
+    }
+
+   .legend {
+    display: inline-block;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin-right: 10px;
+      
+      span{
+        margin-left: 5px;
+      }
+      span:first-child {
+        float: left;
+        width: 30px;
+        height: 30px;
+        border: 3px solid;
+        border-radius: 50%;
+      }
+      &.vacation span {
+        border-color: $vacation;
+        color: $vacation;
+      }
+      &.training span {
+        border-color: $training;
+        color: $training;
+      }
+      &.public span {
+        border-color: $public;
+        color: $public;
+      }
+   }
+
+    .styled-select {
+      width: 100%;
+      height: 34px;
+      overflow: hidden;
+      background: inline-image($select_icon);
+      background-repeat: no-repeat;
+      background-color: transparent;
+      background-position: 96% center;
+      border: 1px solid $pink_brand;
+      color: $pink_brand;
+      font-family: $opensans;
+      cursor: pointer;
+
+       select {
+          background: transparent;
+          width: 100%;
+          padding: 5px;
+          font-size: 16px;
+          line-height: 1;
+          border: 0;
+          border-radius: 0;
+          height: 34px;
+          -webkit-appearance: none;
+       } 
+    }
+
+    .align_center {
+      text-align: center;
+    }
+    .align_right {
+      text-align: right;
     }
     
     .vis {
@@ -36,7 +293,7 @@
           position: absolute;
           content: '';
           width: 145px;
-          height: 56px;
+          height: 60px;
           top: 0px;
           left: -146px;
           background-color: #fff;
@@ -197,4 +454,43 @@
   .vis.timeline .timeaxis .text.saturday,
   .vis.timeline .timeaxis .text.sunday {
     color: $darkgray;
+  }
+
+
+
+
+
+
+
+  .infographica {
+    font-family: $opensans;
+    color: $lightgray;
+      td:first-child{
+        border-right: 1px solid;
+        padding-right: 20px;
+      }
+  }
+
+  .infographica__element_row {
+    ul {
+      list-style: none;
+      margin: 0px;
+      padding: 0px;
+      li {
+        display: inline-block;
+        width: 66px;
+        height: 66px;
+        background-image: inline-image($human_icon);
+        cursor: pointer;
+          &.backend {
+            background-position: center 198px;
+          }
+          &.manager {
+            background-position: center 132px;
+          }
+          &.businessanalyst {
+            background-position: center 66px;
+          }
+      }
+    }
   }

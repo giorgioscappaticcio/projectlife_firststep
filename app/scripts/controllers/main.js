@@ -8,7 +8,7 @@
  * Controller of the mudanoApp
  */
 angular.module('mudanoApp')
-	.controller('MainCtrl', function ($scope, mani) {
+	.controller('MainCtrl', function ($scope, mani, $window) {
 
 		$scope.showCal = false;
 
@@ -19,11 +19,11 @@ angular.module('mudanoApp')
 	          
 	       		$scope.showCal = true;
 	       		
-	       			$scope.holidayplan = generateHolidayPlan($scope.singleDateResponse,$scope.events[clickedEvent].userid);
+	       		$scope.holidayplan = generateHolidayPlan($scope.singleDateResponse,$scope.events[clickedEvent].userid);
 	       		$scope.holidayplan.forEach(orderDates);
-	       			$scope.focus = {};	
-	       			$scope.focus.start = $scope.events[clickedEvent].start;
-	       			$scope.focus.end = $scope.events[clickedEvent].end;
+	       		$scope.focus = {};	
+	       		$scope.focus.start = $scope.events[clickedEvent].start;
+	       		$scope.focus.end = $scope.events[clickedEvent].end;
 	       		
 	       		
 	       		console.log(clickedEvent);
@@ -138,13 +138,46 @@ angular.module('mudanoApp')
         	$scope.showPublicHol = !$scope.showPublicHol;
         }
 
-        $scope.showEvent = function(userName){
-        	$scope.personName = userName;
+        $scope.showRight = false;
+
+        
+
+        
+
+        $scope.showEvent = function(user){
+        	
+        	$scope.showRight = true;
+        	$scope.rightHeight = getDocHeight()  -400 -60 -20;
+        	console.log($scope.rightHeight)
+        	
+        	switch(user.group){
+        		case 'BA':
+        		user.position = 'Bussiness Analyst';
+        		break;
+        		case 'M':
+        		user.position = 'Project Managers';
+        		break;
+        		case 'FE':
+        		user.position = 'Frontend Developers';
+        		break;
+        		case 'BE':
+        		user.position = 'Backend Developers';
+        		break;
+        	}
+        	$scope.personDetails = user;
         }
 
         $scope.demoment = function(date){
         	return moment(date).format('DD-MM-YYYY');
         }
+
+        function getDocHeight() {
+		    return Math.max(
+		        document.body.scrollHeight, document.documentElement.scrollHeight,
+		        document.body.offsetHeight, document.documentElement.offsetHeight,
+		        document.body.clientHeight, document.documentElement.clientHeight
+		    );
+		}
 
         function genVisJsItems (response,skills,avatars,filter){
         	var a = [];

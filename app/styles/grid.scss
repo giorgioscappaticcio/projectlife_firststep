@@ -1,3 +1,11 @@
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
 * {
   @include box-sizing(border-box);
 }
@@ -13,11 +21,16 @@ $pad: 20px;
     display: table;
     clear: both;
   }
+  &.glutter {
+    background-color: white;
+    padding: 0 0 $pad 0;
+  }
 }
 
 [class*='col-'] {
 	float: left;
   padding-right: $pad;
+  position: relative;
   -webkit-transition: width .3s ease-in-out;
     -moz-transition: width .3s ease-in-out;
     -o-transition: width .3s ease-in-out;
@@ -43,6 +56,9 @@ $pad: 20px;
 }
 .col-full{
   width: 100%;
+    &.with_pad {
+      padding:20px 20px 0 20px !important;
+    }
 }
 
 .module {
@@ -60,32 +76,24 @@ $pad: 20px;
 
 
 
-.animate-show {
-  position: absolute;
-  right: 0%;
-}
-
-.animate-show.ng-hide-add.ng-hide-add-active,
-.animate-show.ng-hide-remove.ng-hide-remove-active {
-  -webkit-transition: all linear .3s;
-  transition: all linear .3s;
-}
 
 .showRightPanel {
+  width: 0;
   position: absolute;
-  right: -33.3%;
+  right: 0;
   -webkit-transition: all linear .3s;
   transition: all linear .3s;
     &.open {
-      right: 0px;
+      width: 33.3%;
+      right: 0px; 
+      .circle {
+        display: block;
+      }
+    }
+    .circle {
+      display: none;
     }
 }
 
-.close_btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: white;
-  z-index: 9;  
-}
+
 

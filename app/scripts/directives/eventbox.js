@@ -9,7 +9,7 @@
 angular.module('mudanoApp')
   .directive('eventbox', function () {
     return {
-      template: '<div></div>',
+      template: '',
       scope: {
         dataset: '=dataset',
         focus : '=focus'
