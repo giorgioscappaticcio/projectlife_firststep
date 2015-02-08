@@ -33,7 +33,7 @@ angular.module('mudanoApp')
         
 
         var options = {
-          height: '300px',
+          height: '400px',
           orientation: 'top',
           zoomMin: 1000 * 60 * 60 * 24 * 7,             // one day in milliseconds
           zoomMax: 1000 * 60 * 60 * 24 * 31 * 12 ,
@@ -44,7 +44,7 @@ angular.module('mudanoApp')
           style:'points',
           drawPoints: {
             enabled: true,
-            size: 14,
+            size: 30,
             style: 'circle' // square, circle
           },
           dataAxis: {

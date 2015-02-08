@@ -9,9 +9,9 @@
 angular.module('mudanoApp')
   .directive('timeline', function ($rootScope) {
     return {
-      template: '<div></div>'+
+      template: '<div></div>'/*+
       			'<button ng-click="zoom(1)">Zoom Out</button>'+
-      			'<button ng-click="zoom(-1)">Zoom In</button><br><br>',
+      			'<button ng-click="zoom(-1)">Zoom In</button><br><br>'*/,
       scope: {
 	      dataset: '=dataset',
 	      groups: '=groups',
@@ -24,9 +24,9 @@ angular.module('mudanoApp')
         	type: 'range',
 		    height: '400px',
 		    min: new Date(2014, 8, 1),                // lower limit of visible range
-		    max: new Date(2016, 0, 1),                // upper limit of visible range
+		    max: new Date(2016, 2, 1),                // upper limit of visible range
 		    zoomMin: 1000 * 60 * 60 * 24 * 7,             // one day in milliseconds
-		    zoomMax: 1000 * 60 * 60 * 24 * 31 * 12     // about three months in milliseconds
+		    zoomMax: 1000 * 60 * 60 * 24 * 31 * 24     // about three months in milliseconds
 		  };
 
 	
@@ -42,7 +42,8 @@ angular.module('mudanoApp')
 	       		// scope.timeline.destroy();
 	       		// var data = new vis.DataSet(scope.dataSet);
 	       		// scope.timeline = new vis.Timeline(element[0], data, groups, options);
-	       		scope.timeline.setGroups(groups);	
+	       		scope.timeline.setGroups(groups);
+	       		scope.timeline.setWindow(new Date(2014, 8, 1),new Date(2016, 2, 1));	
 	       	}
 	       	
 	      });
@@ -52,7 +53,7 @@ angular.module('mudanoApp')
 			{id: 'FE', content:'Frontend Developers'},
         	{id: 'BE', content:'Backend Developers'},
         	{id: 'M', content:'Project Managers'},
-        	{id: 'BA', content:'Bussinest Analyst'}
+        	{id: 'BA', content:'Bussines Analyst'}
         ]);
         // scope.dataset = [];
   		// Create a Timeline

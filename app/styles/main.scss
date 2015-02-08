@@ -1,25 +1,94 @@
-/* custom styles for individual items, load this after vis.css */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+@import "compass/css3/box-sizing";
+@import "grid.scss";
 
+    $opensans: 'Open Sans Condensed', sans-serif;
+
+    $vacation : #D90F5A;
+    $public: #F8CA00;
+    $training: #3A89C9;
+
+    $darkgray: #333333;
+    $lightgray: #F6F6F6;
+    $bourdeux: #9E0C39;
+
+    body {
+      margin: 20px;
+    }
+
+    body {
+      // background-color: $darkgray;
+    }
+    
+    .vis {
+      font-family: $opensans;
+      &.timeline {
+        background-color: $darkgray;
+          .currenttime {
+            background-color: $bourdeux;
+          }
+      }
+      
+      .vispanel.top {
+        position: relative;
+        background-color: white;
+        &:before {
+          position: absolute;
+          content: '';
+          width: 145px;
+          height: 56px;
+          top: 0px;
+          left: -146px;
+          background-color: #fff;
+          
+        }
+      }
+      .vispanel.left {
+        background-color: white;
+        color: $darkgray;
+      }
+    }
+
+    .graph2d {
+      .vispanel.top{
+        background-color: $darkgray;
+      }
+      .vis.timeline .timeaxis .text {
+        color: $lightgray !important;
+      }
+      .vispanel.background.horizontal >div .grid.minor{
+        visibility: hidden;
+      }
+      .vispanel.background.horizontal >div .grid.major{
+        visibility: hidden;
+      }
+      .timeaxis .grid{
+        &.minor{
+          border-color: gray !important;
+        }
+      }
+    }
+    
     .graph2d .vispanel.left {
       visibility: hidden;
       width: 0px !important;
     }
     .vis.timeline .publicholiday {
-      fill: yellow;
+      fill: $public;
       stroke-width: 3px;
-      stroke: yellow;
+      stroke: $public;
     }
 
     .vis.timeline .vacation {
-      fill: red;
+      fill: $vacation ;
       stroke-width: 3px;
-      stroke: red;
+      stroke: $vacation ;
     }
 
     .vis.timeline .training {
-    fill: blue;
+    fill: $training;
     stroke-width: 2px;
-    stroke: blue;
+    stroke: $training;
     }
 
     .vis.timeline .item img {
@@ -31,24 +100,32 @@
     }
     .vis.timeline .item.range .content {
       overflow: visible;
+      cursor: pointer;
+    }
+
+    .vis.timeline .item.range.selected {
+      background-color: transparent;
+      &.V {
+        border-color: $vacation;
+      }
     }
 
     .vis.timeline .item.P {
       background-color: transparent;
       border: 1px dotted;
-      color : yellow;
+      color : $public;
         img {
-          border: 3px solid yellow;
+          border: 3px solid $public;
         }
     }
 
     .vis.timeline .item.V {
       background-color: transparent;
       border: 1px dotted;
-      color: red;
+      color: #D90F5A;
 
         img {
-          border: 3px solid red;
+          border: 3px solid #D90F5A;
         }
     }
 
@@ -57,9 +134,9 @@
     .vis.timeline .item.T {
       background-color: transparent;
       border: 1px dotted;
-      color: blue;
+      color: $training;
         img {
-          border: 3px solid blue;
+          border: 3px solid $training;
         }
     }
 
@@ -115,9 +192,9 @@
     /* gray background in weekends, white text color */
   .vis.timeline .timeaxis .grid.saturday,
   .vis.timeline .timeaxis .grid.sunday {
-    background: gray;
+    background: $public;
   }
   .vis.timeline .timeaxis .text.saturday,
   .vis.timeline .timeaxis .text.sunday {
-    color: white;
+    color: $darkgray;
   }

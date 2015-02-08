@@ -20,11 +20,15 @@ angular.module('mudanoApp')
 	       		$scope.focus = {};	
 	       		$scope.focus.start = $scope.events[clickedEvent].start;
 	       		$scope.focus.end = $scope.events[clickedEvent].end;
-	       		//console.log($scope.holidayplan);
+	       		console.log(clickedEvent);
 	       }        
 		});
 
-		
+		$scope.sameDay = function(start,end){
+			if (start.diff(end,'days') == 0){
+				return true;
+			}
+		}
 
 	
 
@@ -159,8 +163,8 @@ angular.module('mudanoApp')
 				 			obj.end.add(24, 'hours');
 				 		break;
 				 	}
-					delete obj.startdate;
-					delete obj.enddate;
+					obj.startdate = moment(obj.startdate,'DD-MM-YYYY');
+					obj.enddate = moment(obj.enddate,'DD-MM-YYYY');
 
 					if (obj.value != filter){
         				a.push(obj);
@@ -239,7 +243,7 @@ angular.module('mudanoApp')
 				if (element.date != array[i].date ){
 					a.push(element)
 				} else {
-					console.log(element.unit)
+					// console.log(element.unit)
 				}
 			}
 			return a;

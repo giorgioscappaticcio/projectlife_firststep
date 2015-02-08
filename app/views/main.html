@@ -1,14 +1,27 @@
-<button ng-click="showholiday()">Public holiday</button>
-<select ng-model="refineGroup">
-  <option value="">Select a group of people</option>
-  <option value="All">All</option>
-  <option value="BA">Bussinest Analyst</option>
-  <option value="M">Project manager</option>
-  <option value="FE">Frontend developer</option>
-  <option value="BE">Backend developer</option>
-</select>
-<timeline dataset="items" groups="group" holidays="publicholiday"></timeline>
-<eventbox class="graph2d" dataset="holidayplan" focus="focus"></eventbox>
+<div class="grid">
+   <div class="col-2-3">
+    <button ng-click="showholiday()">Public holiday</button>
+    <select ng-model="refineGroup">
+      <option value="">Select a group of people</option>
+      <option value="All">All</option>
+      <option value="BA">Bussines Analyst</option>
+      <option value="M">Project manager</option>
+      <option value="FE">Frontend developer</option>
+      <option value="BE">Backend developer</option>
+    </select>
+  </div>
+</div>
+
+<div class="grid">
+   <div class="col-2-3">
+    <timeline dataset="items" groups="group" holidays="publicholiday"></timeline>
+  </div>
+
+  <div class="col-1-3">
+    <eventbox class="graph2d" dataset="holidayplan" focus="focus"></eventbox>
+  </div>
+</div>
+
 <select ng-model="test">
   <option value="">All</option>
   <option value="BA">Bussinest Analyst</option>
@@ -22,7 +35,13 @@
 </ul>
 
 <ul style="float:right">
-  <li ng-repeat="event in events | filter:{name:personName}" ng-bind="demoment(event.start) + ' ('+event.value+') '+ demoment(event.end)"></li>
+  <li ng-repeat="event in events | filter:{name:personName}">
+    <span ng-bind="demoment(event.startdate)"></span><br>
+    <span ng-hide="sameDay(event.startdate,event.enddate)" ng-bind="demoment(event.enddate)"></span><br>
+    <span ng-show="sameDay(event.startdate,event.enddate)"ng-bind="event.unit"></span><br>
+    <span ng-bind="event.value"></span>
+  </li>
+  
 </ul>
 
 
