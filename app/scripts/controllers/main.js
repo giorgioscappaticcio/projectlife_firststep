@@ -10,16 +10,22 @@
 angular.module('mudanoApp')
 	.controller('MainCtrl', function ($scope, mani) {
 
+		$scope.showCal = false;
 
 		$scope.$watch('clickedEvent',function(clickedEvent){ 
 	    	if(clickedEvent){
 	          
 	          console.log($scope.events[clickedEvent])
-	          $scope.holidayplan = generateHolidayPlan($scope.singleDateResponse,$scope.events[clickedEvent].userid);
+	          
+	       		$scope.showCal = true;
+	       		
+	       			$scope.holidayplan = generateHolidayPlan($scope.singleDateResponse,$scope.events[clickedEvent].userid);
 	       		$scope.holidayplan.forEach(orderDates);
-	       		$scope.focus = {};	
-	       		$scope.focus.start = $scope.events[clickedEvent].start;
-	       		$scope.focus.end = $scope.events[clickedEvent].end;
+	       			$scope.focus = {};	
+	       			$scope.focus.start = $scope.events[clickedEvent].start;
+	       			$scope.focus.end = $scope.events[clickedEvent].end;
+	       		
+	       		
 	       		console.log(clickedEvent);
 	       }        
 		});

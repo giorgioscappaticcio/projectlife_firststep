@@ -13,11 +13,12 @@
 </div>
 
 <div class="grid">
-   <div class="col-2-3">
+   <div class="col-full" ng-class="{'col-2-3': showCal}">
     <timeline dataset="items" groups="group" holidays="publicholiday"></timeline>
   </div>
 
-  <div class="col-1-3">
+  <div class="col-1-3 showRightPanel" ng-class="{'open':showCal}">
+  <div ng-click="showCal = false" class="close_btn">Close button</div>
     <eventbox class="graph2d" dataset="holidayplan" focus="focus"></eventbox>
   </div>
 </div>

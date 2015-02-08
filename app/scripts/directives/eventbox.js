@@ -20,12 +20,15 @@ angular.module('mudanoApp')
 
         scope.$watch('dataset', function(dataset) {
           if (dataset){
-            var data = new vis.DataSet(dataset);
-            scope.graph2d.destroy();
-            scope.graph2d = new vis.Graph2d(element[0], data, groups, options);
-            //scope.graph2d.setItems(dataset);
-            scope.graph2d.setWindow(scope.focus.start,scope.focus.end);
-            // console.log(dataset)
+            setTimeout(function() {
+              var data = new vis.DataSet(dataset);
+              scope.graph2d.destroy();
+              scope.graph2d = new vis.Graph2d(element[0], data, groups, options);
+              //scope.graph2d.setItems(dataset);
+              scope.graph2d.setWindow(scope.focus.start,scope.focus.end);
+              // console.log(dataset)  
+            }, 300);
+            
           }
           
         });
@@ -44,7 +47,7 @@ angular.module('mudanoApp')
           style:'points',
           drawPoints: {
             enabled: true,
-            size: 30,
+            size: 14,
             style: 'circle' // square, circle
           },
           dataAxis: {
