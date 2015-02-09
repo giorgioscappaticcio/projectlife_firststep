@@ -11,6 +11,7 @@ angular.module('mudanoApp')
 	.controller('MainCtrl', function ($scope, mani, $window) {
 
 		$scope.showCal = false;
+		$scope.showRight = false;
 
 		$scope.$watch('clickedEvent',function(clickedEvent){ 
 	    	if(clickedEvent){
@@ -30,17 +31,13 @@ angular.module('mudanoApp')
 	       }        
 		});
 
-		$scope.sameDay = function(start,end){
-			if (start.diff(end,'days') == 0){
-				return true;
-			}
-		}
+		$scope.$watch('refineGroup',function(refineGroup){
+        	if (refineGroup){
+        		filterGroup(refineGroup);
+        	}
+        });
 
 	
-
-		$scope.test = 19;
-		
-		
 		$scope.skills = {
 				1 : 'FE',
 				2: 'M',
@@ -111,22 +108,13 @@ angular.module('mudanoApp')
         	$scope.singleDateResponse = response;
         });
 
-        $scope.refresh = function(filter){
+       $scope.refresh = function(filter){
         	var response = [];
         	angular.copy($scope.originalResp, response);
         	response = genVisJsItems(response,$scope.skills, $scope.peopleAvatar,filter);
 			//console.log(response);
 			$scope.items = response;
         }
-
-
-        $scope.$watch('refineGroup',function(refineGroup){
-        	if (refineGroup){
-        		filterGroup(refineGroup);
-        	}
-        })
-        
-        
 
         $scope.showholiday = function(){
         	if (!$scope.showPublicHol){
@@ -138,12 +126,12 @@ angular.module('mudanoApp')
         	$scope.showPublicHol = !$scope.showPublicHol;
         }
 
-        $scope.showRight = false;
-
+        $scope.sameDay = function(start,end){
+			if (start.diff(end,'days') == 0){
+				return true;
+			}
+		}
         
-
-        
-
         $scope.showEvent = function(user){
         	
         	$scope.showRight = true;
@@ -350,9 +338,6 @@ angular.module('mudanoApp')
         	}
         	
         }
-
-		
-
 
 		function genIDsArr(response){
 			var arrPeopleId = [];
