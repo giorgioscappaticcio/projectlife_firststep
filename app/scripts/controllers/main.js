@@ -362,7 +362,7 @@ angular.module('mudanoApp')
 					{id: 'FE', content:'Frontend Developers'},
 		        	{id: 'BE', content:'Backend Developers'},
 		        	{id: 'M', content:'Project Managers'},
-		        	{id: 'BA', content:'Bussinest Analyst'}
+		        	{id: 'BA', content:'Bussiness Analyst'}
 		        ]);
 		        break;
         	}

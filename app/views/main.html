@@ -22,7 +22,7 @@
           <select ng-model="refineGroup">
             <option value="">Select a group of people</option>
             <option value="All">All</option>
-            <option value="BA">Bussines Analyst</option>
+            <option value="BA">Bussiness Analyst</option>
             <option value="M">Project manager</option>
             <option value="FE">Frontend developer</option>
             <option value="BE">Backend developer</option>
@@ -60,7 +60,9 @@
           <td>Frontend Developers</td>
           <td class="infographica__element_row">
             <ul>
-              <li ng-repeat="person in people | filter:{group:'FE'}" class="frontend" ng-click="showEvent(person)"></li>
+              <li ng-repeat="person in people | filter:{group:'FE'}" class="frontend roundtip roundtip-effect-2" ng-click="showEvent(person)">
+                <span class="roundtip-content" ng-bind-html="person.image"></span>
+              </li>
             </ul>
           </td>
         </tr>
@@ -68,7 +70,9 @@
           <td>Backend Developers</td>
           <td class="infographica__element_row">
             <ul>
-              <li ng-repeat="person in people | filter:{group:'BE'}" class="backend" ng-click="showEvent(person)"></li>
+              <li ng-repeat="person in people | filter:{group:'BE'}" class="backend roundtip roundtip-effect-1" ng-click="showEvent(person)">
+                <span class="roundtip-content" ng-bind-html="person.image"></span>
+              </li>
             </ul>
           </td>
         </tr>
@@ -76,7 +80,9 @@
           <td>Project Managers</td>
           <td class="infographica__element_row">
             <ul>
-              <li ng-repeat="person in people | filter:{group:'M'}" class="manager" ng-click="showEvent(person)"></li>
+              <li ng-repeat="person in people | filter:{group:'M'}" class="manager roundtip roundtip-effect-5" ng-click="showEvent(person)">
+                <span class="roundtip-content" ng-bind-html="person.image"></span>
+              </li>
             </ul>
           </td>
         </tr>
@@ -84,7 +90,9 @@
           <td>Business Analyst</td>
           <td class="infographica__element_row">
             <ul>
-              <li ng-repeat="person in people | filter:{group:'BA'}" class="businessanalyst" ng-click="showEvent(person)"></li>
+              <li ng-repeat="person in people | filter:{group:'BA'}" class="businessanalyst roundtip roundtip-effect-4" ng-click="showEvent(person)">
+                <span class="roundtip-content" ng-bind-html="person.image"></span>
+              </li>
             </ul>
           </td>
         </tr>
