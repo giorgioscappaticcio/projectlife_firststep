@@ -135,8 +135,10 @@ angular.module('mudanoApp')
         $scope.showEvent = function(user){
         	
         	$scope.showRight = true;
-        	$scope.rightHeight = getDocHeight()  -400 -60 -20;
-        	console.log($scope.rightHeight)
+        	// $scope.rightHeight = getDocHeight()  -400 -60 -20;
+        	// $scope.rightHeight = angular.element('.main-content')[0].offsetHeight;
+
+        	// console.log(angular.element('.main-content').height())
         	
         	switch(user.group){
         		case 'BA':
@@ -155,8 +157,22 @@ angular.module('mudanoApp')
         	$scope.personDetails = user;
         }
 
-        $scope.demoment = function(date){
-        	return moment(date).format('DD-MM-YYYY');
+        $scope.demoment = function(date,format){
+        	switch (format){
+        		case 'day':
+        			var x  = moment(date).format('DD');
+        		break;
+        		case 'month':
+        			var x  = moment(date).format('MMM');
+        		break;
+        		case 'year':
+        			var x  = moment(date).format('YYYY');
+        		break;
+        		default :
+        			var x  = moment(date).format('DD-MM-YYYY');
+        		break;
+        	}
+        	return x;
         }
 
         function getDocHeight() {
