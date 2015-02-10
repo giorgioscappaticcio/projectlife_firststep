@@ -34,8 +34,9 @@ angular.module('mudanoApp')
 		$scope.$watch('refineGroup',function(refineGroup){
         	console.log(refineGroup)
         	$scope.showRight = false;
+        	filterGroup(refineGroup);
         	if (refineGroup){
-        		filterGroup(refineGroup);
+        		
         		if (refineGroup != 'All'){
         			$scope.groupFilter = refineGroup;
         		} else {
