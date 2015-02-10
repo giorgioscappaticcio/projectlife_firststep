@@ -32,8 +32,15 @@ angular.module('mudanoApp')
 		});
 
 		$scope.$watch('refineGroup',function(refineGroup){
+        	console.log(refineGroup)
+        	$scope.showRight = false;
         	if (refineGroup){
         		filterGroup(refineGroup);
+        		if (refineGroup != 'All'){
+        			$scope.groupFilter = refineGroup;
+        		} else {
+        			$scope.groupFilter = '';
+        		}
         	}
         });
 
@@ -133,12 +140,15 @@ angular.module('mudanoApp')
 		}
         
         $scope.showEvent = function(user){
-        	
         	$scope.showRight = true;
-        	// $scope.rightHeight = getDocHeight()  -400 -60 -20;
-        	// $scope.rightHeight = angular.element('.main-content')[0].offsetHeight;
-
-        	// console.log(angular.element('.main-content').height())
+        	var bodyHeight = angular.element('body').height();
+        	var windowHeight = $window.innerHeight;
+        	var topSum = 400 + 60 + 20 + 20;
+        	if ( bodyHeight< windowHeight){
+    			$scope.rightHeight = windowHeight  -topSum;
+    		} else {
+    			$scope.rightHeight = bodyHeight  -topSum;
+    		};
         	
         	switch(user.group){
         		case 'BA':
@@ -153,6 +163,7 @@ angular.module('mudanoApp')
         		case 'BE':
         		user.position = 'Backend Developers';
         		break;
+        		default:
         	}
         	$scope.personDetails = user;
         }
@@ -175,13 +186,15 @@ angular.module('mudanoApp')
         	return x;
         }
 
-        function getDocHeight() {
-		    return Math.max(
-		        document.body.scrollHeight, document.documentElement.scrollHeight,
-		        document.body.offsetHeight, document.documentElement.offsetHeight,
-		        document.body.clientHeight, document.documentElement.clientHeight
-		    );
-		}
+        $scope.showInfografica = function (){
+        	if ($scope.refineGroup==undefined || $scope.refineGroup==''){
+        		return true;
+        	} else {
+        		return false;
+        	}
+        }
+
+        
 
         function genVisJsItems (response,skills,avatars,filter){
         	var a = [];
@@ -253,7 +266,7 @@ angular.module('mudanoApp')
         		if(events.hasOwnProperty(i)){
         			if (events[i].group == groupfilter) {
         				a.push(events[i]);
-        			}
+        			} 
         		}
         	}
         	return	a; 

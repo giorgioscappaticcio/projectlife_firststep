@@ -1,10 +1,11 @@
-$tooltip_width : 100px;
-$tooltip_halfwidth : -50px;
+$tooltip_width : 140px;
+$tooltip_halfwidth : -70px;
 
 .tooltip {
 	display: inline;
 	position: relative;
 	z-index: 999;
+
 }
 
 /* Trigger text */
@@ -48,10 +49,19 @@ $tooltip_halfwidth : -50px;
 	font-size: 0.765em;
 	line-height: 1.4;
 	box-shadow: -5px -5px 15px rgba(48,54,61,0.2);
-	background: $darkgray;
+	border: 1px solid $lightgray;
 	opacity: 0;
 	cursor: default;
 	pointer-events: none;
+		&.V{
+			background: $vacation;
+		}
+		&.P{
+			background: $public;
+		}
+		&.T{
+			background: $training;
+		}
 }
 
 .tooltip-effect-1 .tooltip-content {
@@ -123,9 +133,17 @@ $tooltip_halfwidth : -50px;
 	position: absolute;
 	pointer-events: none;
 	border-color: transparent;
-	border-top-color: #2a3035;
 	border-width: 10px;
 	margin-left: -10px;
+}
+.tooltip-content.V::after{
+	border-top-color: $vacation;
+}
+.tooltip-content.P::after{
+	border-top-color: $public;
+}
+.tooltip-content.T::after{
+	border-top-color: $training;
 }
 
 /* Tooltip content*/

@@ -7,7 +7,6 @@
     
 
     body {
-      //margin: 0px 0 0 20px;
     }
 
     body {
@@ -76,6 +75,41 @@
       z-index: 9;  
     }
 
+    .date-box {
+      width: 100%;
+      float: left;
+      color: $lightgray;
+      text-align: center;
+
+      &.half {
+        width: 50%;
+        &:first-child{
+          border-right: 1px solid;
+        }
+      }
+      &.unit {
+        width: 100%;
+        border-top: 1px solid;
+      }
+      .day {
+        float: left;
+        width: 100%;
+        border-bottom: 1px solid;
+        font-size: 2em;
+      }
+      .month {
+        float: left;
+        width: 50%;
+        font-size: 1em;
+        border-right: 1px solid;
+      }
+      .year {
+        float: left;
+        width: 50%;
+        font-size: 1em;
+      }
+    }
+
     .badge_pic img{
       width: 100%;
       border-radius: 50%;
@@ -87,11 +121,12 @@
     .pic-list {
       list-style: none;
       margin: 0;
-      padding: 0; 
+      padding: 0;
+      @include clearfix;
+
         li{
           float: left;
-          width: 100px;
-          height: 100px;
+          width: 70px;
           margin: 10px;
           cursor: pointer;
         }
@@ -512,3 +547,31 @@
       }
     }
   }
+
+
+
+
+
+.animate.ng-move,
+.animate.ng-enter,
+.animate.ng-leave {
+  -webkit-transition:all linear 0.3s;
+  transition:all linear 0.3s;
+  -webkit-transform:all linear 0.3s;
+  transform:all linear 0.3s;
+}
+
+.animate.ng-leave.ng-leave-active,
+.animate.ng-move,
+.animate.ng-enter {
+  opacity:0;
+  -webkit-transform: scale(0);
+}
+
+.animate.ng-leave,
+.animate.ng-move.ng-move-active,
+.animate.ng-enter.ng-enter-active {
+  opacity:1;
+  -webkit-transform: scale(1);
+}
+
