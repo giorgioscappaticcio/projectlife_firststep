@@ -8,29 +8,55 @@
  * Controller of the mudanoApp
  */
 angular.module('mudanoApp')
-	.controller('MainCtrl', function ($scope, mani, $window) {
+	.controller('MainCtrl', function ($scope, mani, extrainfo, $window) {
 
+		// Top panel right deactivated
 		$scope.showCal = false;
+		// Bottom panel right deactivated
 		$scope.showRight = false;
 
+		// Call the data
+		mani.getHolidays().then(function(response){
+        	$scope.originalResp = response;
+        	// Show elements on timeline without public holidays
+        	$scope.refresh('P');
+        	$scope.showPublicHol = false;
+        	// Generate an array with the name, the group and the picture of the people;
+        	$scope.people = generatePeople(response,$scope.skills, $scope.peopleAvatar);
+        	// Generate an array with the events;
+        	var res = [];
+        	angular.copy(response, res);
+        	$scope.events = genVisJsItems(res,$scope.skills, $scope.peopleAvatar,'');
+        	//$scope.FE_events = filterGroupEvents($scope.events,'BE');
+        	//$scope.FE_events.forEach(checkOverlapEvents);
+		});
+
+		mani.getData().then(function(response){
+        	$scope.singleDateResponse = response;
+        });
+
+
+		// Added some extrainfo to original dataset 
+		// like position(skills) and people picture;
+		$scope.skills = extrainfo.skills;
+		$scope.peopleAvatar = extrainfo.avatars;
+
+		// When click on timeline element
 		$scope.$watch('clickedEvent',function(clickedEvent){ 
 	    	if(clickedEvent){
-	          
-	          console.log($scope.events[clickedEvent])
-	          
-	       		$scope.showCal = true;
-	       		
+	          	// Top panel right activated
+	          	$scope.showCal = true;
+	          	// Generate dates for the graph on right side
 	       		$scope.holidayplan = generateHolidayPlan($scope.singleDateResponse,$scope.events[clickedEvent].userid);
 	       		$scope.holidayplan.forEach(orderDates);
+	       		// Create object with dates to zoom the graph on right side
 	       		$scope.focus = {};	
 	       		$scope.focus.start = $scope.events[clickedEvent].start;
 	       		$scope.focus.end = $scope.events[clickedEvent].end;
-	       		
-	       		
-	       		console.log(clickedEvent);
-	       }        
+	       	}        
 		});
 
+		// When change element in "select group of people" box
 		$scope.$watch('refineGroup',function(refineGroup){
         	console.log(refineGroup)
         	$scope.showRight = false;
@@ -46,77 +72,7 @@ angular.module('mudanoApp')
         });
 
 	
-		$scope.skills = {
-				1 : 'FE',
-				2: 'M',
-				3: 'FE',
-				4: 'BE',
-				5: 'FE',
-				6: 'M',
-				7: 'BA',
-				8: 'FE',
-				9: 'BA',
-				10: 'BE',
-				11: 'BE',
-				12: 'BE',
-				13: 'M',
-				14: 'BE',
-				15: 'BE',
-				16: 'BE',
-				17: 'BE',
-				18: 'FE',
-				19: 'FE',
-				20: 'BE',
-				21: 'BE',
-				22: 'FE',
-				23: 'M',
-			}
-
-		$scope.peopleAvatar = {
-			1:'https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg',
-			2:'https://s3.amazonaws.com/uifaces/faces/twitter/mizko/128.jpg',
-			3:'https://s3.amazonaws.com/uifaces/faces/twitter/kurafire/128.jpg',
-			4:'https://s3.amazonaws.com/uifaces/faces/twitter/tonypeterson/128.jpg',
-			5:'https://s3.amazonaws.com/uifaces/faces/twitter/gerrenlamson/128.jpg',
-			6:'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-			7:'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg',
-			8:'https://s3.amazonaws.com/uifaces/faces/twitter/vocino/128.jpg',
-			9:'https://s3.amazonaws.com/uifaces/faces/twitter/jina/128.jpg',
-			10:'https://s3.amazonaws.com/uifaces/faces/twitter/sortino/128.jpg',
-			11:'https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg',
-			12:'https://s3.amazonaws.com/uifaces/faces/twitter/uxceo/128.jpg',
-			13:'https://s3.amazonaws.com/uifaces/faces/twitter/th3ya0vi/128.jpg',
-			14:'https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg',
-			15:'https://s3.amazonaws.com/uifaces/faces/twitter/boheme/128.jpg',
-			16:'https://s3.amazonaws.com/uifaces/faces/twitter/motherfuton/128.jpg',
-			17:'https://s3.amazonaws.com/uifaces/faces/twitter/lobanovskiy/128.jpg',
-			18:'https://s3.amazonaws.com/uifaces/faces/twitter/motherfuton/128.jpg',
-			19:'https://s3.amazonaws.com/uifaces/faces/twitter/_arashasghari/128.jpg',
-			20:'https://s3.amazonaws.com/uifaces/faces/twitter/flashmurphy/128.jpg',
-			21:'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-			22:'https://s3.amazonaws.com/uifaces/faces/twitter/nettatheninja/128.jpg',
-			23:'https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg',
-		}
-
-        
-
-        mani.getHolidays().then(function(response){
-        	$scope.originalResp = response;
-        	$scope.refresh('P');
-        	$scope.showPublicHol = false;
-        	$scope.people = generatePeople(response,$scope.skills, $scope.peopleAvatar);
-        	var res = [];
-        	angular.copy(response, res);
-        	$scope.events = genVisJsItems(res,$scope.skills, $scope.peopleAvatar,'');
-        	$scope.FE_events = filterGroupEvents($scope.events,'BE');
-        	$scope.FE_events.forEach(checkOverlapEvents);
-		});
-
-		mani.getData().then(function(response){
-        	$scope.singleDateResponse = response;
-        });
-
-       $scope.refresh = function(filter){
+		$scope.refresh = function(filter){
         	var response = [];
         	angular.copy($scope.originalResp, response);
         	response = genVisJsItems(response,$scope.skills, $scope.peopleAvatar,filter);
@@ -141,7 +97,13 @@ angular.module('mudanoApp')
 		}
         
         $scope.showEvent = function(user){
+        	// Define person to display in bottom right sidebar
+        	user.position = extrainfo.groups[user.group];
+        	$scope.personDetails = user;
+
+        	// Show bottom right sidebar
         	$scope.showRight = true;
+        	// Assign right height to the bottom right sidebar
         	var bodyHeight = angular.element('body').height();
         	var windowHeight = $window.innerHeight;
         	var topSum = 400 + 60 + 20 + 20;
@@ -150,23 +112,6 @@ angular.module('mudanoApp')
     		} else {
     			$scope.rightHeight = bodyHeight  -topSum;
     		};
-        	
-        	switch(user.group){
-        		case 'BA':
-        		user.position = 'Bussiness Analyst';
-        		break;
-        		case 'M':
-        		user.position = 'Project Managers';
-        		break;
-        		case 'FE':
-        		user.position = 'Frontend Developers';
-        		break;
-        		case 'BE':
-        		user.position = 'Backend Developers';
-        		break;
-        		default:
-        	}
-        	$scope.personDetails = user;
         }
 
         $scope.demoment = function(date,format){
@@ -336,37 +281,18 @@ angular.module('mudanoApp')
 		}
         
 		function filterGroup (filter){
-        	switch(filter){
-        		case 'FE':
-        			$scope.group = new vis.DataSet([
-						{id: 'FE', content:'Frontend Developers'}
-		        	]);
-		        break;
-		        case 'BE':
-        			$scope.group = new vis.DataSet([
-						{id: 'BE', content:'Backend Developers'}
-		        	]);
-		        break;
-		        case 'M':
-        			$scope.group = new vis.DataSet([
-						{id: 'M', content:'Project Managers'}
-		        	]);
-		        break;
-		        case 'BA':
-        			$scope.group = new vis.DataSet([
-						{id: 'BA', content:'Bussiness Analyst'}
-		        	]);
-		        break; 
-		        default :
-		        $scope.group = new vis.DataSet([
+        	if (filter != 'All' && filter != '' && filter != undefined) {
+        		$scope.group = new vis.DataSet([
+					{id: filter, content: extrainfo.groups[filter]}
+	        	]);
+        	} else {
+        		$scope.group = new vis.DataSet([
 					{id: 'FE', content:'Frontend Developers'},
 		        	{id: 'BE', content:'Backend Developers'},
 		        	{id: 'M', content:'Project Managers'},
 		        	{id: 'BA', content:'Bussiness Analyst'}
 		        ]);
-		        break;
         	}
-        	
         }
 
 		function genIDsArr(response){
