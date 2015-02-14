@@ -1,79 +1,33 @@
 <div class="col-1-3 showRightPanel right__" style="z-index:9" ng-class="{'open':showRight}">
     <div ng-click="showRight = false" class="circle right close"></div>
-    <div class="right__content">
-      <div class="col-1-3">
-        <div ng-bind-html="personDetails.image" class="profile_pic badge_pic"></div>
-      </div>
-      <div class="col-2-3">
-        <div ng-bind-html="personDetails.name" class="profile_name"></div>
-        <div ng-bind-html="personDetails.position" class="profile_position"></div>
-      </div>
-      <ul class="infoevents">
-        <li ng-repeat="event in events | filter:{name:personDetails.name,value:'V'}" ng-class="event.value" class="tooltip tooltip-effect-2 tooltip-item">
-          <span ng-class="event.unit"></span>
-
-          <span class="tooltip-content clearfix" ng-class="event.value">
-            
-            <div class="date-box" ng-class="{'half':!sameDay(event.startdate,event.enddate)}">
-              <span class="day" ng-bind="event.startdate | demoment:'day'"></span>
-              <span class="month" ng-bind="event.startdate | demoment:'month'"></span>
-              <span class="year" ng-bind="event.startdate | demoment:'year'"></span>
+        <div class="right__content">
+            <div class="col-1-3">
+                <div ng-bind-html="personDetails.image" class="profile_pic badge_pic"></div>
             </div>
-            <div class="date-box half" ng-hide="sameDay(event.startdate,event.enddate)">
-              <span class="day" ng-bind="event.enddate | demoment:'day'"></span>
-              <span class="month" ng-bind="event.enddate | demoment:'month'"></span>
-              <span class="year" ng-bind="event.enddate | demoment:'year'"></span>
+        <div class="col-2-3">
+            <div ng-bind-html="personDetails.name" class="profile_name"></div>
+            <div ng-bind-html="personDetails.position" class="profile_position"></div>
+        </div>
+        <ul class="infoevents" ng-repeat="type in holidayTypes">
+            <li ng-repeat="event in events | filter:{name:personDetails.name,value:type.id}" ng-class="event.value" class="tooltip tooltip-effect-2 tooltip-item">
+                <span ng-class="event.unit"></span>
 
-            </div>
+                <span class="tooltip-content clearfix" ng-class="event.value">
             
-            <span class="date-box unit" ng-show="sameDay(event.startdate,event.enddate) && event.unit!=undefined" ng-bind="event.unit"></span><br>
-          </span>
-
-        </li>
-      </ul>
-      <ul class="infoevents">
-        <li ng-repeat="event in events | filter:{name:personDetails.name,value:'T'}" ng-class="event.value" class="tooltip tooltip-effect-2 tooltip-item">
-          <span ng-class="event.unit"></span>
-          
-          <span class="tooltip-content clearfix" ng-class="event.value">
+                    <div class="date-box" ng-class="{'half': !(event.startdate|sameday:event.enddate)}">
+                        <span class="day" ng-bind="event.startdate | demoment:'day'"></span>
+                        <span class="month" ng-bind="event.startdate | demoment:'month'"></span>
+                        <span class="year" ng-bind="event.startdate | demoment:'year'"></span>
+                    </div>
+                    <div class="date-box half" ng-hide="(event.startdate|sameday:event.enddate)">
+                        <span class="day" ng-bind="event.enddate | demoment:'day'"></span>
+                        <span class="month" ng-bind="event.enddate | demoment:'month'"></span>
+                        <span class="year" ng-bind="event.enddate | demoment:'year'"></span>
+                    </div>
             
-            <div class="date-box" ng-class="{'half':!sameDay(event.startdate,event.enddate)}">
-              <span class="day" ng-bind="event.startdate | demoment:'day'"></span>
-              <span class="month" ng-bind="event.startdate | demoment:'month'"></span>
-              <span class="year" ng-bind="event.startdate | demoment:'year'"></span>
-            </div>
-            <div class="date-box half" ng-hide="sameDay(event.startdate,event.enddate)">
-              <span class="day" ng-bind="event.enddate | demoment:'day'"></span>
-              <span class="month" ng-bind="event.enddate | demoment:'month'"></span>
-              <span class="year" ng-bind="event.enddate | demoment:'year'"></span>
-
-            </div>
-            
-            <span class="date-box unit" ng-show="sameDay(event.startdate,event.enddate) && event.unit!=undefined" ng-bind="event.unit"></span><br>
-          </span>
-        </li>
-      </ul>
-      <ul class="infoevents">
-        <li ng-repeat="event in events | filter:{name:personDetails.name,value:'P'}" ng-class="event.value" class="tooltip tooltip-effect-2 tooltip-item">
-          <span ng-class="event.unit"></span>
-
-          <span class="tooltip-content clearfix" ng-class="event.value">
-            
-            <div class="date-box" ng-class="{'half':!sameDay(event.startdate,event.enddate)}">
-              <span class="day" ng-bind="event.startdate | demoment:'day'"></span>
-              <span class="month" ng-bind="event.startdate | demoment:'month'"></span>
-              <span class="year" ng-bind="event.startdate | demoment:'year'"></span>
-            </div>
-            <div class="date-box half" ng-hide="sameDay(event.startdate,event.enddate)">
-              <span class="day" ng-bind="event.enddate | demoment:'day'"></span>
-              <span class="month" ng-bind="event.enddate | demoment:'month'"></span>
-              <span class="year" ng-bind="event.enddate | demoment:'year'"></span>
-
-            </div>
-            
-            <span class="date-box unit" ng-show="sameDay(event.startdate,event.enddate) && event.unit!=undefined" ng-bind="event.unit"></span><br>
-          </span>
-        </li>
-      </ul>
+                    <span class="date-box unit" ng-show="(event.startdate|sameday:event.enddate) && event.unit!=undefined" ng-bind="event.unit"></span><br>
+                </span>
+            </li>
+        </ul>    
     </div>
-  </div>
+</div>

@@ -22,6 +22,7 @@ angular.module('mudanoApp')
 		$scope.skills = extrainfo.skills;
 		$scope.peopleAvatar = extrainfo.avatars;
 		$scope.groups = extrainfo.groups;
+		$scope.holidayTypes = extrainfo.holidayTypes;
 		
 
 		// Call the data
@@ -97,11 +98,6 @@ angular.module('mudanoApp')
         	$scope.showPublicHol = !$scope.showPublicHol;
         }
 
-        $scope.sameDay = function(start,end){
-			if (start.diff(end,'days') == 0){
-				return true;
-			}
-		}
         
         $scope.showEvent = function(user){
         	// Define person to display in bottom right sidebar

@@ -9,6 +9,13 @@
  */
 angular.module('mudanoApp')
   .constant('extrainfo', {
+  	
+  	holidayTypes : [
+  		{id:'V',content:'Vacation'},
+  		{id:'T',content:'Training'},
+  		{id:'P',content:'Public Holidays'}
+	],
+
   	groups : [
   		{ id:'FE', content : 'Frontend developers'},
   		{ id:'BE', content : 'Backend developers'},
