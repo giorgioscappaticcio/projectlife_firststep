@@ -340,21 +340,22 @@
           }
       }
       
-      .vispanel.top {
-        position: relative;
+      .vispanel.left {
+        overflow: visible !important;
         background-color: white;
+      
         &:before {
           position: absolute;
           content: '';
-          width: 145px;
+          width: 100%;
           height: 60px;
-          top: 0px;
-          left: -146px;
+          top: -61px;
+          left: 0;
           background-color: #fff;
-          
+          z-index: 9;
         }
       }
-      .vispanel.left {
+      .vispanel.top {
         background-color: white;
         color: $darkgray;
       }

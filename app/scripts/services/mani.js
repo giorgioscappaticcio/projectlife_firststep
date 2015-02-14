@@ -8,7 +8,7 @@
  * Service in the mudanoApp.
  */
 angular.module('mudanoApp')
-  .service('mani', function mani($http, $q) {
+  .service('mainSrvc', function mani($http, $q) {
     
     var dataJson = '././data/data.json';
   	var holidaysJson = '././data/holidays.json';

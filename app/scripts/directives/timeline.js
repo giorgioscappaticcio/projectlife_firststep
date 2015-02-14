@@ -7,7 +7,7 @@
  * # timeline
  */
 angular.module('mudanoApp')
-  .directive('timeline', function ($rootScope) {
+  .directive('timeline', function ($rootScope, extrainfo) {
     return {
       template: '<div class="zoom_cont"><div class="zoom _in" ng-click="zoom(-0.3)"></div>'+
       			'<div class="zoom _out"  ng-click="zoom(1)"></div></div>'+
@@ -41,9 +41,6 @@ angular.module('mudanoApp')
         scope.$watch('groups', function(groups) {
 	       	//console.log(groups)
 	       	if (groups){
-	       		// scope.timeline.destroy();
-	       		// var data = new vis.DataSet(scope.dataSet);
-	       		// scope.timeline = new vis.Timeline(element[0], data, groups, options);
 	       		scope.timeline.setGroups(groups);
 	       		scope.timeline.setWindow(new Date(2014, 8, 1),new Date(2016, 2, 1));	
 	       	}
@@ -51,12 +48,7 @@ angular.module('mudanoApp')
 	      });
 
         // Configuration for the Timeline
-  		var group = new vis.DataSet([
-			{id: 'FE', content:'Frontend Developers'},
-        	{id: 'BE', content:'Backend Developers'},
-        	{id: 'M', content:'Project Managers'},
-        	{id: 'BA', content:'Bussines Analyst'}
-        ]);
+  		var group = new vis.DataSet(extrainfo.groups);
         // scope.dataset = [];
   		// Create a Timeline
   		scope.timeline = new vis.Timeline(element[0], scope.dataSet, group, options);

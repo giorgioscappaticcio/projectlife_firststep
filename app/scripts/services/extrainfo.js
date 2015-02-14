@@ -9,12 +9,13 @@
  */
 angular.module('mudanoApp')
   .constant('extrainfo', {
-  	groups : {
-  		'FE' : 'Frontend developers',
-  		'BE' : 'Backend developers',
-  		'M' : 'Project Managers',
-  		'BA' : 'Business Analyst'
-  	},
+  	groups : [
+  		{ id:'FE', content : 'Frontend developers'},
+  		{ id:'BE', content : 'Backend developers'},
+  		{ id:'M', content : 'Project Managers'},
+  		{ id:'BA', content : 'Business Analyst'}
+  	],
+
   	skills : 
   	{
 		1 : 'FE',
